@@ -3,8 +3,10 @@
 --
 -- See the kickstart.nvim README for more information
 return {
+  -- Multi-cursor support
   { 'mg979/vim-visual-multi', branch = 'master' },
 
+  -- Test runner
   {
     'vim-test/vim-test',
     keys = {
