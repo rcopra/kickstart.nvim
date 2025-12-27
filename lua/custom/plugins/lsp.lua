@@ -221,8 +221,12 @@ return {
         -- ts_ls = {},
         --
 
-        -- Ruby LSP
-        ruby_lsp = {},
+        -- Ruby LSP (Rubocop disabled - use :Lint for manual linting)
+        ruby_lsp = {
+          init_options = {
+            linters = {},
+          },
+        },
 
         -- JavaScript/TypeScript
         eslint = {},
