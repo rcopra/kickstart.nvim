@@ -232,6 +232,23 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   end,
 })
 
+-- Set filetype for chezmoi template files
+vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
+  pattern = { '*.tmpl' },
+  callback = function()
+    local filename = vim.fn.expand '%:t:r' -- strip .tmpl
+    if filename:match '%.sh$' then
+      vim.bo.filetype = 'sh'
+    elseif filename:match '%.zsh$' or filename:match 'zshrc$' or filename:match 'zprofile$' then
+      vim.bo.filetype = 'zsh'
+    elseif filename:match 'gitconfig$' then
+      vim.bo.filetype = 'gitconfig'
+    elseif filename:match 'tmux%.conf$' then
+      vim.bo.filetype = 'tmux'
+    end
+  end,
+})
+
 -- [[ Install `lazy.nvim` plugin manager ]]
 --    See `:help lazy.nvim.txt` or https://github.com/folke/lazy.nvim for more info
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
