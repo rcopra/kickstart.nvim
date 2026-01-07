@@ -1,0 +1,11 @@
+-- Seamless navigation between tmux panes and neovim splits
+return {
+  'christoomey/vim-tmux-navigator',
+  cmd = { 'TmuxNavigateLeft', 'TmuxNavigateDown', 'TmuxNavigateUp', 'TmuxNavigateRight' },
+  keys = {
+    { '<C-Left>', '<cmd>TmuxNavigateLeft<cr>' },
+    { '<C-Down>', '<cmd>TmuxNavigateDown<cr>' },
+    { '<C-Up>', '<cmd>TmuxNavigateUp<cr>' },
+    { '<C-Right>', '<cmd>TmuxNavigateRight<cr>' },
+  },
+}
