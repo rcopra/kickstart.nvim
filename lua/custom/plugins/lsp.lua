@@ -221,10 +221,12 @@ return {
         -- ts_ls = {},
         --
 
-        -- Ruby LSP (Rubocop disabled - use :Lint for manual linting)
+        -- Ruby LSP - uses project's ruby-lsp gem, handles rubocop internally
         ruby_lsp = {
+          mason = false, -- Don't use Mason, rely on bundle
           init_options = {
-            linters = {},
+            formatter = 'rubocop',
+            linters = { 'rubocop' },
           },
         },
 
@@ -268,9 +270,8 @@ return {
         'prettierd', -- Faster prettier daemon
 
         -- Linters
-        'rubocop', -- Ruby linter and formatter
         'markdownlint', -- Markdown linter
-        'eslint_d', -- Fast ESLint daemon for JS/TS
+        -- Note: rubocop handled by ruby_lsp via bundle, eslint handled by ESLint LSP
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
