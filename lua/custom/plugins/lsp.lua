@@ -221,15 +221,6 @@ return {
         -- ts_ls = {},
         --
 
-        -- Ruby LSP - uses project's ruby-lsp gem, handles rubocop internally
-        ruby_lsp = {
-          mason = false, -- Don't use Mason, rely on bundle
-          init_options = {
-            formatter = 'rubocop',
-            linters = { 'rubocop' },
-          },
-        },
-
         -- JavaScript/TypeScript
         eslint = {},
 
@@ -289,6 +280,17 @@ return {
           end,
         },
       }
+
+      -- Manually set up servers not managed by Mason (using Neovim 0.11+ API)
+      vim.lsp.config('ruby_lsp', {
+        cmd = { '/opt/homebrew/bin/rbenv', 'exec', 'ruby-lsp' },
+        capabilities = capabilities,
+        init_options = {
+          formatter = 'rubocop',
+          linters = { 'rubocop' },
+        },
+      })
+      vim.lsp.enable('ruby_lsp')
     end,
   },
 }
