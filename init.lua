@@ -121,6 +121,12 @@ end)
 -- Enable break indent
 vim.o.breakindent = true
 
+-- Default indentation (used when guess-indent can't determine from file)
+vim.o.tabstop = 4
+vim.o.shiftwidth = 4
+vim.o.softtabstop = 4
+vim.o.expandtab = true
+
 -- Save undo history
 vim.o.undofile = true
 
