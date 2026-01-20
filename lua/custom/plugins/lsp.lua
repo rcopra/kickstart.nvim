@@ -259,6 +259,7 @@ return {
         'stylua', -- Lua formatter
         'prettier', -- JS/TS/CSS/HTML/JSON/YAML/Markdown formatter
         'prettierd', -- Faster prettier daemon
+        'rustfmt',
 
         -- Linters
         'markdownlint', -- Markdown linter
