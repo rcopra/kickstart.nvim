@@ -282,13 +282,21 @@ return {
         },
       }
 
-      -- Manually set up servers not managed by Mason (using Neovim 0.11+ API)
+      -- Prevent rubocop LSP from auto-starting (ruby_lsp handles rubocop integration)
+      vim.lsp.config('rubocop', {
+        cmd = { 'rubocop', '--lsp' },
+        root_markers = { 'Gemfile', '.git' },
+        filetypes = {},  -- Empty filetypes prevents auto-attach
+      })
+
+      -- Set up ruby_lsp manually (not managed by Mason, using Neovim 0.11+ API)
       vim.lsp.config('ruby_lsp', {
         cmd = { '/opt/homebrew/bin/rbenv', 'exec', 'ruby-lsp' },
         capabilities = capabilities,
+        root_markers = { 'Gemfile', '.git' },
+        filetypes = { 'ruby', 'eruby' },
         init_options = {
-          formatter = 'rubocop',
-          linters = { 'rubocop' },
+          formatter = 'auto',  -- Auto-detect: uses rubocop if in Gemfile, otherwise standard ruby formatting
         },
       })
       vim.lsp.enable 'ruby_lsp'

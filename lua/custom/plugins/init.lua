@@ -4,7 +4,17 @@
 -- See the kickstart.nvim README for more information
 return {
   -- Multi-cursor support
-  { 'mg979/vim-visual-multi', branch = 'master' },
+  {
+    'mg979/vim-visual-multi',
+    branch = 'master',
+    init = function()
+      -- Remap to avoid conflict with tmux navigation
+      vim.g.VM_maps = {
+        ['Add Cursor Down'] = '<C-S-Down>',
+        ['Add Cursor Up'] = '<C-S-Up>',
+      }
+    end,
+  },
 
   -- Test runner
   {
