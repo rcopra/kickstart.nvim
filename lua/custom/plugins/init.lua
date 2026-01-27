@@ -16,6 +16,16 @@ return {
     end,
   },
 
+  -- Surround text objects with quotes, brackets, etc.
+  {
+    'kylechui/nvim-surround',
+    version = '*',
+    event = 'VeryLazy',
+    config = function()
+      require('nvim-surround').setup {}
+    end,
+  },
+
   -- Test runner
   {
     'vim-test/vim-test',
