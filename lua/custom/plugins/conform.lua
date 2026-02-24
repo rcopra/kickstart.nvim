@@ -22,12 +22,17 @@ return {
       local disable_filetypes = { c = true, cpp = true }
       if disable_filetypes[vim.bo[bufnr].filetype] then
         return nil
-      else
-        return {
-          timeout_ms = 5000,
-          lsp_format = 'fallback',
-        }
       end
+
+      -- Per-project .nvim.lua can set this to skip format on save
+      if vim.g.disable_autoformat then
+        return nil
+      end
+
+      return {
+        timeout_ms = 5000,
+        lsp_format = 'fallback',
+      }
     end,
     formatters_by_ft = {
       lua = { 'stylua' },
