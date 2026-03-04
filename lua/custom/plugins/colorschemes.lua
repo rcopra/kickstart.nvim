@@ -11,10 +11,10 @@ return {
   { 'Mofiqul/dracula.nvim' },
 
   { -- Set the default colorscheme here
-    'Mofiqul/dracula.nvim',
+    'folke/tokyonight.nvim',
     priority = 1000,
     config = function()
-      vim.cmd.colorscheme 'dracula'
+      vim.cmd.colorscheme 'tokyonight'
     end,
   },
 }
