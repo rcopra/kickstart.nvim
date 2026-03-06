@@ -11,10 +11,11 @@ return {
   { 'Mofiqul/dracula.nvim' },
 
   { -- Set the default colorscheme here
-    'Mofiqul/dracula.nvim',
+    'rose-pine/neovim',
+    name = 'rose-pine-default',
     priority = 1000,
     config = function()
-      vim.cmd.colorscheme 'dracula'
+      vim.cmd.colorscheme 'rose-pine-moon'
     end,
   },
 }
