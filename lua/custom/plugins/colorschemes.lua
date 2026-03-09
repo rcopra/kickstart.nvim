@@ -8,11 +8,14 @@ return {
   { 'Mofiqul/dracula.nvim' },
 
   { -- Override the default colorscheme here
-    'rose-pine/neovim',
-    name = 'rose-pine-default',
+    'sainnhe/gruvbox-material',
+    name = 'gruvbox-material-default',
     priority = 1000,
     config = function()
-      vim.cmd.colorscheme 'rose-pine-moon'
+      vim.g.gruvbox_material_background = 'hard'
+      vim.g.gruvbox_material_foreground = 'mix'
+      vim.g.gruvbox_material_better_performance = 1
+      vim.cmd.colorscheme 'gruvbox-material'
     end,
   },
 }
