@@ -263,7 +263,7 @@ vim.keymap.set('n', '<PageUp>', '<C-u>zz', { desc = 'Scroll up and center' })
 
 -- Copy file path to clipboard
 vim.keymap.set('n', '<leader>cp', function()
-  local path = vim.fn.expand '%'
+  local path = vim.fn.fnamemodify(vim.fn.expand '%', ':~')
   vim.fn.setreg('+', path)
   vim.notify('Copied: ' .. path)
 end, { desc = '[C]opy relative file [P]ath' })
@@ -567,7 +567,29 @@ require('lazy').setup({
       vim.keymap.set('n', '<leader>sk', builtin.keymaps, { desc = '[S]earch [K]eymaps' })
       vim.keymap.set('n', '<leader>sf', builtin.find_files, { desc = '[S]earch [F]iles' })
       vim.keymap.set('n', '<leader>s.', function()
-        builtin.find_files { hidden = true }
+        builtin.find_files {
+          hidden = true,
+          no_ignore = true,
+          find_command = {
+            'fd', '--type', 'f', '--hidden', '--no-ignore',
+            '--exclude', '.git',
+            '--exclude', 'node_modules',
+            '--exclude', 'vendor/bundle',
+            '--exclude', 'log',
+            '--exclude', 'tmp',
+            '--exclude', 'coverage',
+            '--exclude', 'public/packs',
+            '--exclude', 'public/packs-test',
+            '--exclude', 'public/assets',
+            '--exclude', 'dist',
+            '--exclude', '.yarn',
+            '--exclude', 'storybook-static',
+            '--exclude', '.storybook-out',
+            '--exclude', '.cursor',
+            '--exclude', '.goose',
+            '--exclude', '.windsurf',
+          },
+        }
       end, { desc = '[S]earch hidden/[.] files' })
       vim.keymap.set('n', '<leader>ss', builtin.builtin, { desc = '[S]earch [S]elect Telescope' })
       vim.keymap.set({ 'n', 'v' }, '<leader>sw', builtin.grep_string, { desc = '[S]earch current [W]ord' })
