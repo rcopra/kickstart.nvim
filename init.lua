@@ -263,7 +263,7 @@ vim.keymap.set('n', '<PageUp>', '<C-u>zz', { desc = 'Scroll up and center' })
 
 -- Copy file path to clipboard
 vim.keymap.set('n', '<leader>cp', function()
-  local path = vim.fn.fnamemodify(vim.fn.expand '%', ':~')
+  local path = vim.fn.fnamemodify(vim.fn.expand '%', ':.')
   vim.fn.setreg('+', path)
   vim.notify('Copied: ' .. path)
 end, { desc = '[C]opy relative file [P]ath' })
@@ -1154,6 +1154,11 @@ require('lazy').setup({
 
           -- enables treesitter based indentation
           vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+          -- Remove ':' from indentkeys for Ruby to prevent
+          -- unwanted re-indentation when typing symbols/hash keys
+          if filetype == 'ruby' then
+            vim.opt_local.indentkeys:remove(':')
+          end
         end,
       })
     end,
