@@ -118,7 +118,22 @@ vim.o.showmode = false
 --  Schedule the setting after `UiEnter` because it can increase startup-time.
 --  Remove this option if you want your OS clipboard to remain independent.
 --  See `:help 'clipboard'`
-vim.schedule(function() vim.o.clipboard = 'unnamedplus' end)
+vim.schedule(function()
+  vim.o.clipboard = 'unnamedplus'
+  -- Use OSC 52 so clipboard works over SSH
+  local osc52 = require('vim.ui.clipboard.osc52')
+  vim.g.clipboard = {
+    name = 'OSC 52',
+    copy = {
+      ['+'] = osc52.copy('+'),
+      ['*'] = osc52.copy('*'),
+    },
+    paste = {
+      ['+'] = osc52.paste('+'),
+      ['*'] = osc52.paste('*'),
+    },
+  }
+end)
 
 -- Enable break indent
 vim.o.breakindent = true
@@ -807,7 +822,7 @@ require('lazy').setup({
         -- gopls = {},
         -- pyright = {},
         jdtls = {},
-        rust_analyzer = {},
+        -- rust_analyzer = {},
         --
         -- Some languages (like typescript) have entire language plugins that can be useful:
         --    https://github.com/pmizio/typescript-tools.nvim
@@ -865,7 +880,7 @@ require('lazy').setup({
         'stylua', -- Lua formatter
         'prettier', -- JS/TS/CSS/HTML/JSON/YAML/Markdown formatter
         'prettierd', -- Faster prettier daemon
-        'rustfmt',
+        -- 'rustfmt',
 
         -- Linters
         'markdownlint', -- Markdown linter

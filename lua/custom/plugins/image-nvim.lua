@@ -1,6 +1,7 @@
 -- Image rendering in Neovim (markdown, etc.)
 return {
   '3rd/image.nvim',
+  enabled = false, -- requires luarocks/lua 5.1, not available on Pi
   dependencies = {
     'nvim-lua/plenary.nvim',
   },
