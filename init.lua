@@ -299,6 +299,7 @@ vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
 vim.filetype.add {
   extension = {
     jbuilder = 'ruby',
+    mjs = 'javascript',
   },
 }
 
@@ -386,12 +387,8 @@ require('lazy').setup({
 
         -- Actions
         -- visual mode
-        map('v', '<leader>hs', function()
-          gitsigns.stage_hunk { vim.fn.line '.', vim.fn.line 'v' }
-        end, { desc = 'git [s]tage hunk' })
-        map('v', '<leader>hr', function()
-          gitsigns.reset_hunk { vim.fn.line '.', vim.fn.line 'v' }
-        end, { desc = 'git [r]eset hunk' })
+        map('v', '<leader>hs', function() gitsigns.stage_hunk { vim.fn.line '.', vim.fn.line 'v' } end, { desc = 'git [s]tage hunk' })
+        map('v', '<leader>hr', function() gitsigns.reset_hunk { vim.fn.line '.', vim.fn.line 'v' } end, { desc = 'git [r]eset hunk' })
         -- normal mode
         map('n', '<leader>hs', gitsigns.stage_hunk, { desc = 'git [s]tage hunk' })
         map('n', '<leader>hr', gitsigns.reset_hunk, { desc = 'git [r]eset hunk' })
@@ -401,9 +398,7 @@ require('lazy').setup({
         map('n', '<leader>hp', gitsigns.preview_hunk, { desc = 'git [p]review hunk' })
         map('n', '<leader>hb', gitsigns.blame_line, { desc = 'git [b]lame line' })
         map('n', '<leader>hd', gitsigns.diffthis, { desc = 'git [d]iff against index' })
-        map('n', '<leader>hD', function()
-          gitsigns.diffthis '@'
-        end, { desc = 'git [D]iff against last commit' })
+        map('n', '<leader>hD', function() gitsigns.diffthis '@' end, { desc = 'git [D]iff against last commit' })
         -- Toggles
         map('n', '<leader>tb', gitsigns.toggle_current_line_blame, { desc = '[T]oggle git show [b]lame line' })
         map('n', '<leader>tD', gitsigns.preview_hunk_inline, { desc = '[T]oggle git show [D]eleted' })
@@ -565,31 +560,56 @@ require('lazy').setup({
       vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = '[S]earch [H]elp' })
       vim.keymap.set('n', '<leader>sk', builtin.keymaps, { desc = '[S]earch [K]eymaps' })
       vim.keymap.set('n', '<leader>sf', builtin.find_files, { desc = '[S]earch [F]iles' })
-      vim.keymap.set('n', '<leader>s.', function()
-        builtin.find_files {
-          hidden = true,
-          no_ignore = true,
-          find_command = {
-            'fd', '--type', 'f', '--hidden', '--no-ignore',
-            '--exclude', '.git',
-            '--exclude', 'node_modules',
-            '--exclude', 'vendor/bundle',
-            '--exclude', 'log',
-            '--exclude', 'tmp',
-            '--exclude', 'coverage',
-            '--exclude', 'public/packs',
-            '--exclude', 'public/packs-test',
-            '--exclude', 'public/assets',
-            '--exclude', 'dist',
-            '--exclude', '.yarn',
-            '--exclude', 'storybook-static',
-            '--exclude', '.storybook-out',
-            '--exclude', '.cursor',
-            '--exclude', '.goose',
-            '--exclude', '.windsurf',
-          },
-        }
-      end, { desc = '[S]earch hidden/[.] files' })
+      vim.keymap.set(
+        'n',
+        '<leader>s.',
+        function()
+          builtin.find_files {
+            hidden = true,
+            no_ignore = true,
+            find_command = {
+              'fd',
+              '--type',
+              'f',
+              '--hidden',
+              '--no-ignore',
+              '--exclude',
+              '.git',
+              '--exclude',
+              'node_modules',
+              '--exclude',
+              'vendor/bundle',
+              '--exclude',
+              'log',
+              '--exclude',
+              'tmp',
+              '--exclude',
+              'coverage',
+              '--exclude',
+              'public/packs',
+              '--exclude',
+              'public/packs-test',
+              '--exclude',
+              'public/assets',
+              '--exclude',
+              'dist',
+              '--exclude',
+              '.yarn',
+              '--exclude',
+              'storybook-static',
+              '--exclude',
+              '.storybook-out',
+              '--exclude',
+              '.cursor',
+              '--exclude',
+              '.goose',
+              '--exclude',
+              '.windsurf',
+            },
+          }
+        end,
+        { desc = '[S]earch hidden/[.] files' }
+      )
       vim.keymap.set('n', '<leader>ss', builtin.builtin, { desc = '[S]earch [S]elect Telescope' })
       vim.keymap.set({ 'n', 'v' }, '<leader>sw', builtin.grep_string, { desc = '[S]earch current [W]ord' })
       vim.keymap.set('n', '<leader>sg', builtin.live_grep, { desc = '[S]earch by [G]rep' })
@@ -803,9 +823,7 @@ require('lazy').setup({
           on_init = function(client)
             if client.workspace_folders then
               local path = client.workspace_folders[1].name
-              if path ~= vim.fn.stdpath 'config' and (vim.uv.fs_stat(path .. '/.luarc.json') or vim.uv.fs_stat(path .. '/.luarc.jsonc')) then
-                return
-              end
+              if path ~= vim.fn.stdpath 'config' and (vim.uv.fs_stat(path .. '/.luarc.json') or vim.uv.fs_stat(path .. '/.luarc.jsonc')) then return end
             end
 
             client.config.settings.Lua = vim.tbl_deep_extend('force', client.config.settings.Lua, {
@@ -902,14 +920,10 @@ require('lazy').setup({
         -- have a well standardized coding style. You can add additional
         -- languages here or re-enable it for the disabled ones.
         local disable_filetypes = { c = true, cpp = true }
-        if disable_filetypes[vim.bo[bufnr].filetype] then
-          return nil
-        end
+        if disable_filetypes[vim.bo[bufnr].filetype] then return nil end
 
         -- Per-project .nvim.lua can set this to skip format on save
-        if vim.g.disable_autoformat then
-          return nil
-        end
+        if vim.g.disable_autoformat then return nil end
 
         return {
           timeout_ms = 5000,
@@ -1049,7 +1063,7 @@ require('lazy').setup({
         },
       }
 
-      -- The default colorscheme is overridden in lua/custom/plugins/colorschemes.lua
+      -- colorscheme is set in lua/custom/plugins/colorschemes.lua
     end,
   },
 
@@ -1109,26 +1123,20 @@ require('lazy').setup({
     config = function()
       -- NOTE: Add any additional parsers you need here
       local parsers =
-        { 'bash', 'c', 'diff', 'go', 'html', 'json', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'python', 'query', 'ruby', 'vim', 'vimdoc', 'toml' }
+        { 'bash', 'c', 'diff', 'go', 'html', 'javascript', 'json', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'python', 'query', 'ruby', 'vim', 'vimdoc', 'toml' }
       require('nvim-treesitter').install(parsers)
       vim.api.nvim_create_autocmd('FileType', {
         callback = function(args)
           local buf, filetype = args.buf, args.match
 
           -- Let rainbow_csv handle CSV highlighting instead of treesitter
-          if filetype == 'csv' then
-            return
-          end
+          if filetype == 'csv' then return end
 
           local language = vim.treesitter.language.get_lang(filetype)
-          if not language then
-            return
-          end
+          if not language then return end
 
           -- check if parser exists and load it
-          if not vim.treesitter.language.add(language) then
-            return
-          end
+          if not vim.treesitter.language.add(language) then return end
           -- enables syntax highlighting and other treesitter features
           vim.treesitter.start(buf, language)
 
@@ -1139,10 +1147,11 @@ require('lazy').setup({
 
           -- enables treesitter based indentation
           vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
-          -- Remove ':' from indentkeys for Ruby to prevent
-          -- unwanted re-indentation when typing symbols/hash keys
+          -- Remove '.' and ':' from indentkeys for Ruby to prevent
+          -- unwanted re-indentation when typing method chains or symbols
           if filetype == 'ruby' then
-            vim.opt_local.indentkeys:remove(':')
+            vim.opt_local.indentkeys:remove ':'
+            vim.opt_local.indentkeys:remove '.'
           end
         end,
       })

@@ -4,18 +4,16 @@ return {
   { 'rebelot/kanagawa.nvim' },
   { 'catppuccin/nvim', name = 'catppuccin' },
   { 'rose-pine/neovim', name = 'rose-pine' },
-  { 'ellisonleao/gruvbox.nvim', name = 'gruvbox' },
-  { 'Mofiqul/dracula.nvim' },
-
-  { -- Override the default colorscheme here
-    'sainnhe/gruvbox-material',
-    name = 'gruvbox-material-default',
+  {
+    'ellisonleao/gruvbox.nvim',
+    name = 'gruvbox',
     priority = 1000,
     config = function()
-      vim.g.gruvbox_material_background = 'hard'
-      vim.g.gruvbox_material_foreground = 'mix'
-      vim.g.gruvbox_material_better_performance = 1
-      vim.cmd.colorscheme 'gruvbox-material'
+      require('gruvbox').setup {
+        contrast = 'hard',
+      }
+      vim.cmd.colorscheme 'gruvbox'
     end,
   },
+  { 'Mofiqul/dracula.nvim' },
 }
