@@ -9,7 +9,7 @@ return {
       -- Ruby: handled by ruby_lsp
       -- JS/TS: handled by ESLint LSP
       lint.linters_by_ft = {
-        markdown = { 'markdownlint' },
+        -- markdown = { 'markdownlint' },
       }
 
       -- Lint on save for markdown files
