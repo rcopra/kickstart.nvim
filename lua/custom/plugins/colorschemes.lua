@@ -1,19 +1,28 @@
--- Additional colorschemes (tokyonight is in init.lua as the kickstart default)
--- Switch between them with :Telescope colorscheme or <space>ss
+-- Colorschemes: switch between them with :Telescope colorscheme or <Space>ss
+-- Only one should have an active vim.cmd.colorscheme line — that's your default.
 return {
+
+  -- Installed but not configured — activate with :colorscheme <name>
   { 'rebelot/kanagawa.nvim' },
   { 'catppuccin/nvim', name = 'catppuccin' },
-  { 'rose-pine/neovim', name = 'rose-pine' },
+  { 'Mofiqul/dracula.nvim' },
+  { 'vague-theme/vague.nvim' },
+  { 'rose-pine/neovim' },
+  { 'navarasu/onedark.nvim' },
+  { 'ellisonleao/gruvbox.nvim' },
+
+  -- Active colorscheme
   {
-    'ellisonleao/gruvbox.nvim',
-    name = 'gruvbox',
+    'ribru17/bamboo.nvim',
     priority = 1000,
     config = function()
-      require('gruvbox').setup {
-        contrast = 'hard',
+      require('bamboo').setup {
+        style = 'multiplex', -- 'vulgaris', 'multiplex', and 'light'
+        code_style = {
+          comments = { italic = true },
+        },
       }
-      vim.cmd.colorscheme 'gruvbox'
+      vim.cmd.colorscheme 'bamboo'
     end,
   },
-  { 'Mofiqul/dracula.nvim' },
 }
