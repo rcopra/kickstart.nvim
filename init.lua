@@ -106,7 +106,7 @@ vim.g.loaded_netrwPlugin = 1
 vim.o.number = true
 -- You can also add relative line numbers, to help with jumping.
 --  Experiment for yourself to see if you like it!
-vim.o.relativenumber = true
+vim.o.relativenumber = false
 
 -- Enable mouse mode, can be useful for resizing splits for example!
 vim.o.mouse = 'a'
@@ -121,16 +121,16 @@ vim.o.showmode = false
 vim.schedule(function()
   vim.o.clipboard = 'unnamedplus'
   -- Use OSC 52 so clipboard works over SSH
-  local osc52 = require('vim.ui.clipboard.osc52')
+  local osc52 = require 'vim.ui.clipboard.osc52'
   vim.g.clipboard = {
     name = 'OSC 52',
     copy = {
-      ['+'] = osc52.copy('+'),
-      ['*'] = osc52.copy('*'),
+      ['+'] = osc52.copy '+',
+      ['*'] = osc52.copy '*',
     },
     paste = {
-      ['+'] = osc52.paste('+'),
-      ['*'] = osc52.paste('*'),
+      ['+'] = osc52.paste '+',
+      ['*'] = osc52.paste '*',
     },
   }
 end)
@@ -1137,8 +1137,26 @@ require('lazy').setup({
     -- [[ Configure Treesitter ]] See `:help nvim-treesitter-intro`
     config = function()
       -- NOTE: Add any additional parsers you need here
-      local parsers =
-        { 'bash', 'c', 'diff', 'go', 'html', 'javascript', 'jsdoc', 'json', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'python', 'query', 'ruby', 'vim', 'vimdoc', 'toml' }
+      local parsers = {
+        'bash',
+        'c',
+        'diff',
+        'go',
+        'html',
+        'javascript',
+        'jsdoc',
+        'json',
+        'lua',
+        'luadoc',
+        'markdown',
+        'markdown_inline',
+        'python',
+        'query',
+        'ruby',
+        'vim',
+        'vimdoc',
+        'toml',
+      }
       require('nvim-treesitter').install(parsers)
       vim.api.nvim_create_autocmd('FileType', {
         callback = function(args)
