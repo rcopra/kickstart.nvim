@@ -21,6 +21,9 @@ return {
         code_style = {
           comments = { italic = true },
         },
+        highlights = {
+          ['@comment'] = { fg = '$grey' },
+        },
       }
       vim.cmd.colorscheme 'bamboo'
     end,
