@@ -822,7 +822,7 @@ require('lazy').setup({
       local servers = {
         -- clangd = {},
         -- gopls = {},
-        -- pyright = {},
+        pyright = {},
         jdtls = {},
         -- rust_analyzer = {},
         --
