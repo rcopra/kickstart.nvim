@@ -1,67 +1,81 @@
--- Colorschemes: switch between them with :Telescope colorscheme or <Space>ss
--- Only one should have an active vim.cmd.colorscheme line — that's your default.
+-- Colorscheme: catppuccin
+-- Flavors: latte, frappe, macchiato, mocha
 return {
-
-  -- Installed but not configured — activate with :colorscheme <name>
-  { 'catppuccin/nvim', name = 'catppuccin' },
-  { 'Mofiqul/dracula.nvim' },
-  { 'vague-theme/vague.nvim' },
-  { 'rose-pine/neovim' },
-  { 'navarasu/onedark.nvim' },
-  { 'ellisonleao/gruvbox.nvim' },
-  { 'ribru17/bamboo.nvim' },
-
-  -- Active colorscheme
   {
-    'rebelot/kanagawa.nvim',
+    'catppuccin/nvim',
+    name = 'catppuccin',
     priority = 1000,
     config = function()
-      require('kanagawa').setup {
-        compile = false,
-        undercurl = true,
-        commentStyle = { italic = true },
-        functionStyle = {},
-        keywordStyle = { italic = true },
-        statementStyle = { bold = true },
-        typeStyle = {},
-        transparent = false,
-        dimInactive = false,
-        terminalColors = true,
-        colors = {
-          palette = {
-            -- Uncomment and modify to override palette colors
-            -- sumiInk0 = "#16161D",  -- darkest background
-            -- fujiWhite = "#DCD7BA", -- default foreground
-          },
-          theme = {
-            dragon = {
-              ui = {
-                -- Uncomment to override dragon UI colors
-                -- bg = "#181616",
-                -- fg = "#c5c9c5",
-              },
-              syn = {
-                -- Uncomment to override dragon syntax colors
-                -- comment = "#625e5a",
-              },
-            },
-            all = {},
-          },
-        },
-        overrides = function(colors)
-          return {
-            -- Uncomment to override specific highlight groups
-            -- Comment = { fg = colors.palette.fujiGray, italic = true },
-            -- ['@comment'] = { fg = colors.palette.fujiGray, italic = true },
-          }
-        end,
-        theme = 'wave',
+      require('catppuccin').setup {
+        flavour = 'macchiato', -- latte, frappe, macchiato, mocha
         background = {
-          dark = 'wave',
-          light = 'lotus',
+          light = 'latte',
+          dark = 'macchiato',
+        },
+        transparent_background = false,
+        show_end_of_buffer = false,
+        term_colors = false,
+        dim_inactive = {
+          enabled = false,
+          shade = 'dark',
+          percentage = 0.15,
+        },
+        no_italic = false,
+        no_bold = false,
+        no_underline = false,
+        styles = {
+          comments = { 'italic' },
+          conditionals = { 'italic' },
+          loops = {},
+          functions = {},
+          keywords = {},
+          strings = {},
+          variables = {},
+          numbers = {},
+          booleans = {},
+          properties = {},
+          types = {},
+          operators = {},
+        },
+        color_overrides = {},
+        custom_highlights = {},
+        default_integrations = true,
+        integrations = {
+          cmp = true,
+          gitsigns = true,
+          nvimtree = true,
+          treesitter = true,
+          notify = false,
+          mini = {
+            enabled = true,
+            indentscope_color = '',
+          },
+          telescope = { enabled = true },
+          which_key = true,
+          mason = true,
+          native_lsp = {
+            enabled = true,
+            virtual_text = {
+              errors = { 'italic' },
+              hints = { 'italic' },
+              warnings = { 'italic' },
+              information = { 'italic' },
+              ok = { 'italic' },
+            },
+            underlines = {
+              errors = { 'underline' },
+              hints = { 'underline' },
+              warnings = { 'underline' },
+              information = { 'underline' },
+              ok = { 'underline' },
+            },
+            inlay_hints = {
+              background = true,
+            },
+          },
         },
       }
-      vim.cmd.colorscheme 'kanagawa'
+      vim.cmd.colorscheme 'catppuccin'
     end,
   },
 }
