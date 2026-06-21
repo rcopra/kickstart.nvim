@@ -122,19 +122,29 @@ vim.o.cmdheight = 0
 --  See `:help 'clipboard'`
 vim.schedule(function()
   vim.o.clipboard = 'unnamedplus'
-  -- Use OSC 52 so clipboard works over SSH
-  local osc52 = require 'vim.ui.clipboard.osc52'
-  vim.g.clipboard = {
-    name = 'OSC 52',
-    copy = {
-      ['+'] = osc52.copy '+',
-      ['*'] = osc52.copy '*',
-    },
-    paste = {
-      ['+'] = osc52.paste '+',
-      ['*'] = osc52.paste '*',
-    },
-  }
+  -- Only route the clipboard through OSC 52 when connected over SSH. Locally,
+  -- macOS's native pbcopy/pbpaste provider handles read+write instantly.
+  if vim.env.SSH_TTY then
+    local osc52 = require 'vim.ui.clipboard.osc52'
+    -- Paste from Neovim's own register instead of querying the terminal.
+    -- OSC 52 *read* blocks ("waiting for OSC 52 response from terminal")
+    -- because tmux/zellij often never answer the query. Copy (write) still
+    -- goes out over OSC 52, which works fine through both multiplexers.
+    local function paste()
+      return vim.split(vim.fn.getreg '"', '\n')
+    end
+    vim.g.clipboard = {
+      name = 'OSC 52',
+      copy = {
+        ['+'] = osc52.copy '+',
+        ['*'] = osc52.copy '*',
+      },
+      paste = {
+        ['+'] = paste,
+        ['*'] = paste,
+      },
+    }
+  end
 end)
 
 -- Enable break indent
