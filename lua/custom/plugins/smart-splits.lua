@@ -4,7 +4,10 @@
 return {
   'mrjones2014/smart-splits.nvim',
   lazy = false,
-  opts = {},
+  -- zellij_move_focus_or_tab: at a split edge, cross into the adjacent Zellij
+  -- *tab* if there's no pane in that direction (left/right only) — matches the
+  -- MoveFocusOrTab bindings on the Zellij side so handoff is symmetric.
+  opts = { zellij_move_focus_or_tab = true },
   keys = {
     { '<M-Left>', function() require('smart-splits').move_cursor_left() end, desc = 'Move to left split/pane' },
     { '<M-Down>', function() require('smart-splits').move_cursor_down() end, desc = 'Move to lower split/pane' },
