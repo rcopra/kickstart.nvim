@@ -268,11 +268,9 @@ vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right win
 vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
--- Alternative arrow key bindings for window navigation (Ctrl+Arrow)
-vim.keymap.set('n', '<C-Left>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
-vim.keymap.set('n', '<C-Right>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
-vim.keymap.set('n', '<C-Down>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
-vim.keymap.set('n', '<C-Up>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
+-- Split navigation is also on <M-arrow> (Alt+arrow) via smart-splits.nvim;
+-- see lua/custom/plugins/smart-splits.lua. Ctrl+hjkl above is kept too (note:
+-- Ctrl+h is shadowed by Zellij's "move" mode when running inside Zellij).
 
 -- Scroll half-page and center cursor
 vim.keymap.set('n', '<C-d>', '<C-d>zz', { desc = 'Scroll down and center' })
@@ -831,7 +829,7 @@ require('lazy').setup({
       ---@type table<string, vim.lsp.Config>
       local servers = {
         -- clangd = {},
-        -- gopls = {},
+        gopls = {},
         pyright = {},
         jdtls = {},
         -- rust_analyzer = {},
