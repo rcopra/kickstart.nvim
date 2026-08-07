@@ -839,12 +839,28 @@ require('lazy').setup({
             },
           },
         },
-        pyright = {},
+        pyright = {
+          settings = {
+            python = {
+              analysis = {
+                autoImportCompletions = true, -- accepting a completion inserts the import (like gopls)
+              },
+            },
+          },
+        },
         ruff = {
           -- Pyright handles hover/completion; ruff provides lint diagnostics + code actions
           on_attach = function(client)
             client.server_capabilities.hoverProvider = false
           end,
+          init_options = {
+            settings = {
+              lint = {
+                -- Pyright already reports these; ignoring avoids duplicate diagnostics
+                ignore = { 'F821', 'F822', 'F823' },
+              },
+            },
+          },
         },
         jdtls = {},
         -- rust_analyzer = {},
@@ -1053,7 +1069,7 @@ require('lazy').setup({
         -- <c-k>: Toggle signature help
         --
         -- See :h blink-cmp-config-keymap for defining your own keymap
-        preset = 'default',
+        preset = 'super-tab',
 
         -- For more advanced Luasnip keymaps (e.g. selecting choice nodes, expansion) see:
         --    https://github.com/L3MON4D3/LuaSnip?tab=readme-ov-file#keymaps
@@ -1072,7 +1088,7 @@ require('lazy').setup({
       },
 
       sources = {
-        default = { 'lsp', 'path', 'snippets' },
+        default = { 'lsp', 'path' },
       },
 
       snippets = { preset = 'luasnip' },
