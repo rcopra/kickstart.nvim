@@ -829,8 +829,23 @@ require('lazy').setup({
       ---@type table<string, vim.lsp.Config>
       local servers = {
         -- clangd = {},
-        gopls = {},
+        gopls = {
+          settings = {
+            gopls = {
+              staticcheck = true, -- extra analyzers (nil derefs, unused code, simplifications)
+              analyses = {
+                unusedparams = true,
+              },
+            },
+          },
+        },
         pyright = {},
+        ruff = {
+          -- Pyright handles hover/completion; ruff provides lint diagnostics + code actions
+          on_attach = function(client)
+            client.server_capabilities.hoverProvider = false
+          end,
+        },
         jdtls = {},
         -- rust_analyzer = {},
         --
@@ -890,6 +905,7 @@ require('lazy').setup({
         'stylua', -- Lua formatter
         'prettier', -- JS/TS/CSS/HTML/JSON/YAML/Markdown formatter
         'prettierd', -- Faster prettier daemon
+        'goimports', -- Go formatter + import management
         -- 'rustfmt',
 
         -- Linters
@@ -958,6 +974,8 @@ require('lazy').setup({
       formatters_by_ft = {
         lua = { 'stylua' },
         ruby = { 'rubocop' },
+        go = { 'goimports' }, -- gofmt + adds/removes imports on save
+        python = { 'ruff_organize_imports', 'ruff_format' },
         -- Conform can also run multiple formatters sequentially
         -- python = { "isort", "black" },
         --
@@ -1163,6 +1181,11 @@ require('lazy').setup({
         'python',
         'query',
         'ruby',
+        'typescript',
+        'tsx',
+        'java',
+        'css',
+        'yaml',
         'vim',
         'vimdoc',
         'toml',
