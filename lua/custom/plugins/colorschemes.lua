@@ -76,6 +76,32 @@ return {
         },
       }
       vim.cmd.colorscheme 'catppuccin'
+
+      -- Follow the macOS system appearance. Setting 'background' reloads the
+      -- colorscheme, and catppuccin picks the flavour from its background map.
+      local function sync_background()
+        vim.system({ 'defaults', 'read', '-g', 'AppleInterfaceStyle' }, { text = true }, function(res)
+          local want = (res.code == 0 and res.stdout:match 'Dark') and 'dark' or 'light'
+          vim.schedule(function()
+            if vim.o.background ~= want then
+              vim.o.background = want
+            end
+          end)
+        end)
+      end
+
+      sync_background()
+      vim.api.nvim_create_autocmd({ 'FocusGained', 'VimResume' }, { callback = sync_background })
+
+      local timer = vim.uv.new_timer()
+      timer:start(10000, 10000, vim.schedule_wrap(sync_background))
+      vim.api.nvim_create_autocmd('VimLeavePre', {
+        callback = function()
+          if not timer:is_closing() then
+            timer:close()
+          end
+        end,
+      })
     end,
   },
 }
