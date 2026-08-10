@@ -639,7 +639,9 @@ do
     --     i = { ['<c-enter>'] = 'to_fuzzy_refine' },
     --   },
     -- },
-    -- pickers = {}
+    pickers = {
+      find_files = { hidden = true },
+    },
     extensions = {
       ['ui-select'] = { require('telescope.themes').get_dropdown() },
     },
@@ -653,56 +655,6 @@ do
   local builtin = require 'telescope.builtin'
   vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = '[S]earch [H]elp' })
   vim.keymap.set('n', '<leader>sk', builtin.keymaps, { desc = '[S]earch [K]eymaps' })
-  vim.keymap.set(
-    'n',
-    '<leader>s.',
-    function()
-      builtin.find_files {
-        hidden = true,
-        no_ignore = true,
-        find_command = {
-          'fd',
-          '--type',
-          'f',
-          '--hidden',
-          '--no-ignore',
-          '--exclude',
-          '.git',
-          '--exclude',
-          'node_modules',
-          '--exclude',
-          'vendor/bundle',
-          '--exclude',
-          'log',
-          '--exclude',
-          'tmp',
-          '--exclude',
-          'coverage',
-          '--exclude',
-          'public/packs',
-          '--exclude',
-          'public/packs-test',
-          '--exclude',
-          'public/assets',
-          '--exclude',
-          'dist',
-          '--exclude',
-          '.yarn',
-          '--exclude',
-          'storybook-static',
-          '--exclude',
-          '.storybook-out',
-          '--exclude',
-          '.cursor',
-          '--exclude',
-          '.goose',
-          '--exclude',
-          '.windsurf',
-        },
-      }
-    end,
-    { desc = '[S]earch hidden/[.] files' }
-  )
   vim.keymap.set('n', '<leader>sf', builtin.find_files, { desc = '[S]earch [F]iles' })
   vim.keymap.set('n', '<leader>ss', builtin.builtin, { desc = '[S]earch [S]elect Telescope' })
   vim.keymap.set({ 'n', 'v' }, '<leader>sw', builtin.grep_string, { desc = '[S]earch current [W]ord' })
