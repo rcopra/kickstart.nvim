@@ -1,5 +1,2 @@
 -- Rainbow CSV: color-codes columns in CSV/TSV files
-return {
-  'mechatroner/rainbow_csv',
-  ft = { 'csv', 'tsv' },
-}
+vim.pack.add { 'https://github.com/mechatroner/rainbow_csv' }

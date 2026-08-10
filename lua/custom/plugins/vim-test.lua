@@ -1,0 +1,13 @@
+-- Test runner
+vim.pack.add { 'https://github.com/vim-test/vim-test' }
+
+-- Run tests in a terminal split
+vim.g['test#strategy'] = 'neovim'
+-- Use bundle exec for Ruby
+vim.g['test#ruby#rspec#executable'] = 'bundle exec rspec'
+
+vim.keymap.set('n', '<leader>tn', ':TestNearest<CR>', { desc = '[T]est [N]earest' })
+vim.keymap.set('n', '<leader>tf', ':TestFile<CR>', { desc = '[T]est [F]ile' })
+vim.keymap.set('n', '<leader>ts', ':TestSuite<CR>', { desc = '[T]est [S]uite' })
+vim.keymap.set('n', '<leader>tl', ':TestLast<CR>', { desc = '[T]est [L]ast' })
+vim.keymap.set('n', '<leader>tv', ':TestVisit<CR>', { desc = '[T]est [V]isit (go to last test file)' })
