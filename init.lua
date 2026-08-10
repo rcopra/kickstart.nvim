@@ -626,8 +626,28 @@ do
     --     i = { ['<c-enter>'] = 'to_fuzzy_refine' },
     --   },
     -- },
+    defaults = {
+      -- Grep hidden files too (live_grep, grep_string). Gitignore still
+      -- respected, .git/ excluded — mirrors find_files below.
+      vimgrep_arguments = {
+        'rg',
+        '--color=never',
+        '--no-heading',
+        '--with-filename',
+        '--line-number',
+        '--column',
+        '--smart-case',
+        '--hidden',
+        '--glob',
+        '!**/.git/*',
+      },
+    },
     pickers = {
-      find_files = { hidden = true },
+      -- Hidden files shown, .git/ excluded. Gitignore still respected;
+      -- whitelist useful ignored files (.env etc.) per-repo via an .ignore file.
+      find_files = {
+        find_command = { 'rg', '--files', '--hidden', '--glob', '!**/.git/*' },
+      },
     },
     extensions = {
       ['ui-select'] = { require('telescope.themes').get_dropdown() },
