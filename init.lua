@@ -520,19 +520,6 @@ do
   }
 
   -- [[ Colorscheme ]]
-  -- You can easily change to a different colorscheme.
-  -- Change the name of the colorscheme plugin below, and then
-  -- change the command under that to load whatever the name of that colorscheme is.
-  --
-  -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
-  vim.pack.add { gh 'folke/tokyonight.nvim' }
-  ---@diagnostic disable-next-line: missing-fields
-  require('tokyonight').setup {
-    styles = {
-      comments = { italic = false }, -- Disable italics in comments
-    },
-  }
-
   -- Colorscheme is loaded in lua/custom/plugins/colorschemes.lua (catppuccin)
 
   -- Highlight todo, notes, etc in comments
@@ -947,8 +934,6 @@ do
     'goimports', -- Go formatter + import management
     -- 'rustfmt',
 
-    -- Linters
-    'markdownlint', -- Markdown linter
     -- Note: rubocop handled by ruby_lsp via bundle, eslint handled by ESLint LSP
   })
 
@@ -1223,7 +1208,6 @@ do
   --
   require 'kickstart.plugins.debug'
   require 'kickstart.plugins.indent_line'
-  -- require 'kickstart.plugins.lint'
   require 'kickstart.plugins.autopairs'
   require 'kickstart.plugins.neo-tree'
   -- require 'kickstart.plugins.gitsigns' -- keymaps are inlined in the gitsigns setup above
