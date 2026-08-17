@@ -862,18 +862,6 @@ do
         },
       },
     },
-    ruff = {
-      -- Pyright handles hover/completion; ruff provides lint diagnostics + code actions
-      on_attach = function(client) client.server_capabilities.hoverProvider = false end,
-      init_options = {
-        settings = {
-          lint = {
-            -- Pyright already reports these; ignoring avoids duplicate diagnostics
-            ignore = { 'F821', 'F822', 'F823' },
-          },
-        },
-      },
-    },
     jdtls = {},
     -- rust_analyzer = {},
     --
@@ -1010,7 +998,6 @@ do
     formatters_by_ft = {
       ruby = { 'rubocop' },
       go = { 'goimports' }, -- gofmt + adds/removes imports on save
-      python = { 'ruff_organize_imports', 'ruff_format' },
       -- rust = { 'rustfmt' },
       -- You can use 'stop_after_first' to run the first available formatter from the list
       javascript = { 'prettierd', 'prettier', stop_after_first = true },
