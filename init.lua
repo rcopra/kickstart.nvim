@@ -862,7 +862,7 @@ do
         },
       },
     },
-    jdtls = {},
+    -- jdtls = {},
     -- rust_analyzer = {},
     --
     -- Some languages (like typescript) have entire language plugins that can be useful:
@@ -940,6 +940,9 @@ do
     'prettier', -- JS/TS/CSS/HTML/JSON/YAML/Markdown formatter
     'prettierd', -- Faster prettier daemon
     'goimports', -- Go formatter + import management
+    'ruff', -- Python formatter + import management
+    'shfmt', -- sh/bash formatter
+    'sql-formatter', -- SQL formatter
     -- 'rustfmt',
 
     -- Note: rubocop handled by ruby_lsp via bundle, eslint handled by ESLint LSP
@@ -998,6 +1001,10 @@ do
     formatters_by_ft = {
       ruby = { 'rubocop' },
       go = { 'goimports' }, -- gofmt + adds/removes imports on save
+      python = { 'ruff_organize_imports', 'ruff_format' }, -- sorts imports, then formats
+      sql = { 'sql_formatter' },
+      sh = { 'shfmt' },
+      bash = { 'shfmt' }, -- not zsh: shfmt can't parse zsh-only syntax
       -- rust = { 'rustfmt' },
       -- You can use 'stop_after_first' to run the first available formatter from the list
       javascript = { 'prettierd', 'prettier', stop_after_first = true },
@@ -1013,6 +1020,9 @@ do
     formatters = {
       rubocop = {
         args = { '-A', '--stderr', '--stdin', '$FILENAME' },
+      },
+      sql_formatter = {
+        prepend_args = { '-l', 'postgresql' }, -- the default 'sql' dialect can't parse casts like `id::text`
       },
     },
   }
