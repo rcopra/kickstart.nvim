@@ -874,8 +874,6 @@ do
     -- JavaScript/TypeScript
     eslint = {},
 
-    stylua = {}, -- Used to format Lua code
-
     -- Special Lua Config, as recommended by neovim help docs
     lua_ls = {
       on_init = function(client)
@@ -942,6 +940,7 @@ do
     'goimports', -- Go formatter + import management
     'ruff', -- Python formatter + import management
     'shfmt', -- sh/bash formatter
+    'stylua', -- Lua formatter
     'sql-formatter', -- SQL formatter
     -- 'rustfmt',
 
@@ -1001,6 +1000,7 @@ do
     formatters_by_ft = {
       ruby = { 'rubocop' },
       go = { 'goimports' }, -- gofmt + adds/removes imports on save
+      lua = { 'stylua' },
       python = { 'ruff_organize_imports', 'ruff_format' }, -- sorts imports, then formats
       sql = { 'sql_formatter' },
       sh = { 'shfmt' },
