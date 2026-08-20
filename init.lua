@@ -291,9 +291,9 @@ do
   vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
   vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
-  -- Split navigation is also on <M-arrow> (Alt+arrow) via smart-splits.nvim;
-  -- see lua/custom/plugins/smart-splits.lua. Ctrl+hjkl above is kept too (note:
-  -- Ctrl+h is shadowed by Zellij's "move" mode when running inside Zellij).
+  -- Split navigation is also on <M-arrow> (Alt+arrow); see
+  -- lua/custom/plugins/splits.lua, which crosses into the adjacent Herdr pane
+  -- at a split edge. Ctrl+hjkl above is kept too, as plain window moves.
 
   -- Scroll half-page and center cursor
   vim.keymap.set('n', '<C-d>', '<C-d>zz', { desc = 'Scroll down and center' })
