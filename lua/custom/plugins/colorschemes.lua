@@ -3,11 +3,7 @@
 vim.pack.add { { src = 'https://github.com/catppuccin/nvim', name = 'catppuccin' } }
 
 require('catppuccin').setup {
-  flavour = 'auto', -- latte, frappe, macchiato, mocha
-  background = {
-    light = 'latte',
-    dark = 'mocha',
-  },
+  flavour = 'mocha', -- latte, frappe, macchiato, mocha
   show_end_of_buffer = false,
   auto_integrations = true,
 }
