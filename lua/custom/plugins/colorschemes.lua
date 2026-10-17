@@ -6,6 +6,7 @@ require('catppuccin').setup {
   flavour = 'mocha', -- latte, frappe, macchiato, mocha
   show_end_of_buffer = false,
   auto_integrations = true,
+  integrations = { rainbow_delimiters = true },
 }
 
 vim.cmd.colorscheme 'catppuccin-nvim'

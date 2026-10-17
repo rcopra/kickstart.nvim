@@ -112,6 +112,10 @@
       "rev": "74b06c6c75e4eeb3108ec01852001636d85a932b",
       "src": "https://github.com/nvim-lua/plenary.nvim"
     },
+    "rainbow-delimiters.nvim": {
+      "rev": "b55decda611755171bc5bf8f4c99603a75de4b41",
+      "src": "https://github.com/HiPhish/rainbow-delimiters.nvim"
+    },
     "rainbow_csv": {
       "rev": "3dbbfd7d17536aebfb80f571255548495574c32b",
       "src": "https://github.com/mechatroner/rainbow_csv"
