@@ -982,7 +982,8 @@ do
       -- Per-project .nvim.lua can set this to skip format on save
       if vim.g.disable_autoformat then return nil end
 
-      return { timeout_ms = 5000 }
+      -- Only run the formatters listed below on save; <leader>f still falls back to the LSP
+      return { timeout_ms = 5000, lsp_format = 'never' }
     end,
     default_format_opts = {
       lsp_format = 'fallback', -- Use external formatters if configured below, otherwise use LSP formatting. Set to `false` to disable LSP formatting entirely.
@@ -1008,6 +1009,9 @@ do
       markdown = { 'prettier' },
     },
     formatters = {
+      -- Only run prettier in projects that have a prettier config
+      prettier = { require_cwd = true },
+      prettierd = { require_cwd = true },
       sql_formatter = {
         prepend_args = { '-l', 'postgresql' }, -- the default 'sql' dialect can't parse casts like `id::text`
       },
