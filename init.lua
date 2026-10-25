@@ -982,6 +982,10 @@ do
       -- Per-project .nvim.lua can set this to skip format on save
       if vim.g.disable_autoformat then return nil end
 
+      -- Let these format on save through their LSP (cljfmt via clojure-lsp)
+      local lsp_format_filetypes = { clojure = true }
+      if lsp_format_filetypes[vim.bo[bufnr].filetype] then return { timeout_ms = 5000, lsp_format = 'fallback' } end
+
       -- Only run the formatters listed below on save; <leader>f still falls back to the LSP
       return { timeout_ms = 5000, lsp_format = 'never' }
     end,
@@ -996,7 +1000,7 @@ do
       sql = { 'sql_formatter' },
       sh = { 'shfmt' },
       bash = { 'shfmt' }, -- not zsh: shfmt can't parse zsh-only syntax
-      -- rust = { 'rustfmt' },
+      rust = { 'rustfmt' },
       -- You can use 'stop_after_first' to run the first available formatter from the list
       javascript = { 'prettierd', 'prettier', stop_after_first = true },
       typescript = { 'prettierd', 'prettier', stop_after_first = true },
