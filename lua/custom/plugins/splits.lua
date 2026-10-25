@@ -22,10 +22,11 @@ else
   vim.pack.add { 'https://github.com/mrjones2014/smart-splits.nvim' }
 
   local splits = require 'smart-splits'
-  splits.setup {}
+  -- Prefer the current tmux session over inherited multiplexer environment.
+  splits.setup { multiplexer_integration = vim.env.TMUX and 'tmux' or nil }
 
-  vim.keymap.set('n', '<M-Left>', splits.move_cursor_left, { desc = 'Move to left split' })
-  vim.keymap.set('n', '<M-Down>', splits.move_cursor_down, { desc = 'Move to lower split' })
-  vim.keymap.set('n', '<M-Up>', splits.move_cursor_up, { desc = 'Move to upper split' })
-  vim.keymap.set('n', '<M-Right>', splits.move_cursor_right, { desc = 'Move to right split' })
+  vim.keymap.set('n', '<M-Left>', splits.move_cursor_left, { desc = 'Move to left split/pane' })
+  vim.keymap.set('n', '<M-Down>', splits.move_cursor_down, { desc = 'Move to lower split/pane' })
+  vim.keymap.set('n', '<M-Up>', splits.move_cursor_up, { desc = 'Move to upper split/pane' })
+  vim.keymap.set('n', '<M-Right>', splits.move_cursor_right, { desc = 'Move to right split/pane' })
 end

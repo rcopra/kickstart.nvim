@@ -292,7 +292,7 @@ do
   vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
   -- Split navigation is also on <M-arrow> (Alt+arrow); see
-  -- lua/custom/plugins/splits.lua, which crosses into the adjacent Herdr pane
+  -- lua/custom/plugins/splits.lua, which crosses into the adjacent tmux pane
   -- at a split edge. Ctrl+hjkl above is kept too, as plain window moves.
 
   -- Scroll half-page and center cursor
@@ -874,6 +874,9 @@ do
     -- JavaScript/TypeScript
     eslint = {},
 
+    -- Clojure
+    clojure_lsp = {},
+
     -- Special Lua Config, as recommended by neovim help docs
     lua_ls = {
       on_init = function(client)
@@ -944,7 +947,7 @@ do
     'sql-formatter', -- SQL formatter
     -- 'rustfmt',
 
-    -- Note: rubocop handled by ruby_lsp via bundle, eslint handled by ESLint LSP
+    -- Note: eslint handled by ESLint LSP
   })
 
   require('mason-tool-installer').setup { ensure_installed = ensure_installed }
@@ -953,24 +956,6 @@ do
     vim.lsp.config(name, server)
     vim.lsp.enable(name)
   end
-
-  -- Prevent rubocop LSP from auto-starting (ruby_lsp handles rubocop integration)
-  vim.lsp.config('rubocop', {
-    cmd = { 'rubocop', '--lsp' },
-    root_markers = { 'Gemfile', '.git' },
-    filetypes = {}, -- Empty filetypes prevents auto-attach
-  })
-
-  -- Set up ruby_lsp manually (not managed by Mason; installed via mise's ruby)
-  vim.lsp.config('ruby_lsp', {
-    cmd = { 'ruby-lsp' },
-    root_markers = { 'Gemfile', '.git' },
-    filetypes = { 'ruby', 'eruby' },
-    init_options = {
-      formatter = 'auto', -- Auto-detect: uses rubocop if in Gemfile, otherwise standard ruby formatting
-    },
-  })
-  vim.lsp.enable 'ruby_lsp'
 end
 
 -- ============================================================
@@ -998,7 +983,6 @@ do
     },
     -- You can also specify external formatters in here.
     formatters_by_ft = {
-      ruby = { 'rubocop' },
       go = { 'goimports' }, -- gofmt + adds/removes imports on save
       lua = { 'stylua' },
       python = { 'ruff_organize_imports', 'ruff_format' }, -- sorts imports, then formats
@@ -1018,9 +1002,6 @@ do
       markdown = { 'prettier' },
     },
     formatters = {
-      rubocop = {
-        args = { '-A', '--stderr', '--stdin', '$FILENAME' },
-      },
       sql_formatter = {
         prepend_args = { '-l', 'postgresql' }, -- the default 'sql' dialect can't parse casts like `id::text`
       },
@@ -1130,6 +1111,7 @@ do
   local parsers = {
     'bash',
     'c',
+    'clojure',
     'css',
     'diff',
     'go',
